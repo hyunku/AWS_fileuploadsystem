@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link type = "text/css" rel = "stylesheet" href ="css/register.css">
+	  
+<!-- Javascript SDK-->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+  <script src="js/amazon-cognito-auth.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  <script src="js/amazon-cognito-identity.min.js"></script>  
+  <script src="js/config.js"></script>
+  <script src = "js/register.js"></script>
+	  
+  </head>
+
+	
+  <body>
+
+    <h2 class="h3 mb-3 font-weight-normal" id="titleheader">EEG Platform</h2>
+
+    <h3 id='signup'>Sign-Up</h3> 
+
+	<form class = "form-horizontal" id = "f">
+	<table>
+		<tr>
+			<td>Email : </td>
+			<td>
+				<input type="email" class="form-control" id="emailInputRegister" placeholder="Email" pattern=".*" required autofocus></td>
+		</tr>
+		<tr>
+			<td><label>Password : </label></td>
+			<td><input type="password" class="form-control" id="passwordInputRegister" placeholder="Password" pattern=".*" required></td>
+		</tr>
+		<tr>
+			<td><label>Retry-Password : </label></td>
+			<td><input type="password" class="form-control" id="confirmationpassword" placeholder="Retry-Password" pattern=".*" required></td>
+		</tr>
+		<tr>
+			<td><label>Last Name : </label></td>
+			<td><input type="text" class="form-control" id="lastnameRegister" placeholder="Last Name" pattern=".*" required></td>
+		</tr>
+		<tr>
+			<td><label>First Name : </label></td>
+			<td><input type="text" class="form-control" id="firstnameRegister" placeholder="First Name" pattern=".*" required></td>
+		</tr>
+		<tr>
+			<td><label>Affiation : </label></td>
+			<td><input type="text" class="form-control" id="affiationRegister" placeholder="Affiation" pattern=".*" required></td>
+		</tr>
+		<tr>
+			<td><label>Position : </label></td>
+			<td><input type="text" class="form-control" id="positionRegister" placeholder="Position" pattern=".*" required></td>
+		</tr>
+		<tr><td><br></td></tr>
+		<tr>
+		<td><label>Question 1 ~ : </label></td>
+		<td><input type="email" class="form-control" id="question1Register" placeholder="Question1" pattern=".*"></td>
+		</tr>
+		<tr>
+			<td><label>Question 2 ~ : </label></td>
+			<td><input type="email" class="form-control" id="question2Register" placeholder="Question2" pattern=".*"></td>
+		</tr>
+	</table><br><br>	
+
+      <div id = "button">
+      <button type="button" class = "button" onclick="registerButton()">submit</button>  
+      <button type="button" class = "button" onclick="resetButton()">reset</button><br>
+      </div>
+
+    </form>
+ </body>
+  
+</html>
+
+
+
+
+
+
+
+

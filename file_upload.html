@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Upload System</title>
+        <style>
+        </style>
+            <!--켜지면 get() 함수를 실행함.  -->
+            <body onLoad="get()">
+                <div id="page">
+            
+                </div>
+
+ 
+    </head>
+ 
+    <body>
+        <div class="Top">
+  
+        </div>
+        <div style="text-align: center;"><h1>Upload</h1></div>
+ 
+        <form name="article_add_form" method="POST">
+            <table width="940" style="padding:5px 0 5px 0; ">
+               <tr height="2"><td colspan="2"></td></tr>
+               <tr>
+                  <th>Name</th>
+                  <td><input type="text" id="name" required></td>
+               </tr>
+               <tr>
+                  <th>EEG</th>
+                  <td><input type="text" id="eeg" required></td>
+                </tr>
+                    <th>File</th>
+                    <td><input type="file" multiple id="article_image" name="filename[]"></td>
+                  </tr>
+                  <tr>
+                  <th>Description</th>
+                  <td><input type="text" id="description" style = "width:180px; height:180px;"></td>
+               </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: center;">
+                        <input type="button" value="GET" onClick="get()" />
+                        <input type="button" value="등록" onClick="func()" />
+                        <input type="reset" value="취소">
+      
+                     </td>
+                    </table>
+                   </form>
+ 
+        </div>
+         
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+        <script src="./app.js"></script>
+        
+        <script>
+        function getHtml(template) {
+          return template.join('\n');
+        }
+        listAlbums();
+            /* HTML노드 추가 함수 */
+            function createNode(element){
+                return document.createElement(element);
+            }
+            /* HTML노드에 자녀 추가 함수 */
+            function append(parent, el){
+                return parent.appendChild(el);
+            }
+            /* CSS 속성 추가 함수 */
+            function addStyle(styles) { 
+              
+              /* Create style element */ 
+              var css = document.createElement('style'); 
+              css.type = 'text/css'; 
+         
+              if (css.styleSheet)  
+                  css.styleSheet.cssText += styles; 
+              else  
+                  css.appendChild(document.createTextNode(styles)); 
+                
+              /* Append style to the head element */ 
+              document.getElementsByTagName("head")[0].appendChild(css); 
+          }
+          
+            /* API 게이트웨이로 매물리스트 정보 가져오는 함수 */ 
+            
+            
+           function func(){
+           upload_to_db();
+           submitToAPI(event);
+           
+           
+           }
+
+       var elem = document.getElementById('page'); 
+       const URL = "https://8jrtnp0vbf.execute-api.ap-northeast-2.amazonaws.com/default";    
+       function get(){
+                fetch(URL, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(resp => resp.json())
+                .then(function(data){
+                    let article_arr = data.Items;
+                    console.log(data.Items);
+                    return article_arr && article_arr.map(function(article_indiv){
+                        let li = createNode('li');
+                        let img = createNode('img');
+                        let span = createNode('span');
+                        
+                        // console.log(article_indiv.img_source);
+                        //img.src = article_indiv.img_source;
+                        span.innerHTML = "Name: "+ article_indiv.name +" - " + "EEG: "+ article_indiv.eeg;
+                        append(li,img);
+                        append(li,span);
+                        append(elem,li);
+ 
+                        var styles = 'div#page > li';
+                        addStyle(styles);
+ 
+                    })
+                })
+                .catch(err => console.log(err))
+            }
+        var Item = {
+              'name': "",
+              'eeg': "",
+              "description" : "",              
+              'img_source': "",
+          }
+          
+      function upload_to_db(img_location) {
+        var name = document.querySelector("#name").value;
+        var eeg = document.querySelector("#eeg").value;
+        var description = document.querySelector("#description").value;
+       Item = {
+        'name': name,
+        'eeg': eeg,
+        'description': description,
+        'img_source': img_location,
+   
+       }
+
+    post()
+    }
+
+      function post() {
+      fetch(URL, {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            "TableName": "hyunku",
+            Item
+          })
+        }).then(resp => console.log(resp))
+        .catch(err => console.log(err))
+    }
+              
+              
+
+            
+      function submitToAPI(e){
+          e.preventDefault();
+          var name = document.querySelector("#name").value;
+          add_article_with_photo(name);
+       }
+       
+       function reset(){
+          document.querySelector("#name").value = '';
+          document.querySelector("#eeg").value = '';
+          document.querySelector("#description").value = '';
+          document.querySelector("#article_image").value = '';
+       
+       }
+
+        </script>
+ 
+    </body>
+ 
+    <head>
+ 
+    </head>
+ 
+</html>
+
+ 
